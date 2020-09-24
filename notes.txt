@@ -1,0 +1,57 @@
+                 Spark Programming: DataFrame API & SQL
+
+
+- Spark uses functional programming: PySpark API is written with Funct prog principles
+- Pyspark use py4j to make calls to jvm.
+- functional programming useful for parallel computing (counting on different machines)
+- General functions:
+  We have used the following general functions that are quite similar to methods of pandas dataframes:
+  select(): returns a new DataFrame with the selected columns
+  filter(): filters rows using the given condition
+  where(): is just an alias for filter()
+  groupBy(): groups the DataFrame using the specified columns, so we can run aggregation on them
+  sort(): returns a new DataFrame sorted by the specified column(s). By default the second parameter 'ascending' is True.
+  dropDuplicates(): returns a new DataFrame with unique rows based on all or just a subset of columns
+  withColumn(): returns a new DataFrame by adding a column or replacing the existing column that has the same name.
+                The first parameter is the name of the new column, the second is an expression of how to compute it.
+- Aggregate functions:
+  if we would like to compute one type of aggregate for one or more columns of the DataFrame we can just simply
+  chain the aggregate method after a groupBy(). If we would like to use different functions on different columns
+  , agg()comes in handy. For example agg({"salary": "avg", "age": "max"}) computes the average salary and maximum age.
+
+- User defined functions (UDF):
+  from the pyspark.sql.functions module. The default type of the returned variable for UDFs is string.
+  If we would like to return an other type we need to explicitly do so by using the different types
+  from the pyspark.sql.types module.
+
+- Window functions:
+  When defining the window we can choose how to sort and group (with the partitionBy method)
+  the rows and how wide of a window we'd like to use (described by rangeBetween or rowsBetween).
+  ie: Une window function (fonction de fenêtrage) calcule une valeur de retour pour chaque ligne d’une table
+  à partir d’un groupe de lignes appelé Frame. Chaque ligne d’entrée peut être associée à un Frame unique
+- WindowSpec:
+  est une spécification qui définit quelles lignes sont incluses dans le frame:
+  orderBy:
+  partitionBy:
+  rowsBetween: (start,end):position de la ligne actuelle en fct de sa position ds la partition
+  rangeBetween: (start,end):relatifs à la ligne actuelle en fct de la valeur de la colonne dans ORDER BY.
+- Window Functions:
+  les fonctions de classement : rank, dense_rank, percent_rank, ntile, row_number
+  les fonctions analytiques   : cume_dist, first, last, lag, lead
+  les fonctions d’agrégation  : sum, avg, min, max et count
+
+                    SQL	                  DataFrame API
+Ranking functions	  rank	                rank
+                    dense_rank	          denseRank
+                    percent_rank	        percentRank
+                    ntile	                ntile
+                    row_number	          rowNumber
+Analytic functions	cume_dist	            cumeDist
+                    first_value	          firstValue
+                    last_value	          lastValue
+                    lag	                  lag
+                    lead	                lead
+
+
+
+                      Spark Clustering:
